@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ Class 描述：签名视图
+ */
 @interface SignatureView : UIView
 
 @property (nonatomic, strong) UIColor *lineColor;   //画笔颜色

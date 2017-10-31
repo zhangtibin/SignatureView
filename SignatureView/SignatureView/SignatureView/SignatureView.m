@@ -47,18 +47,20 @@
     _lineWidth = lineWidth;
 }
 
+#pragma mark - 获取签名图片
 - (UIImage *)signatureImage {
     UIGraphicsBeginImageContext(self.frame.size);//创建一个基于位图的上下文，并设置当前上下文
     CGContextRef contex = UIGraphicsGetCurrentContext();//获取图形上下文
     UIRectClip(CGRectMake(3, 15, self.frame.size.width-6, self.frame.size.height-30));//裁剪区域
     [self.layer renderInContext:contex];
     UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
-    NSData* imageData =  UIImagePNGRepresentation(image);
+    NSData* imageData =  UIImagePNGRepresentation(image);//生成 PNG 格式的图片（如果是其他格式，可以自行更改）
     UIImage* pngImage = [UIImage imageWithData:imageData];
     return pngImage;
 }
 
 #pragma mark - Public Actions
+#pragma mark - 撤销上步绘制操作
 - (void)undoLastDraw {
     if (self.pathsArray.count >0) {
         NSInteger index = self.pathsArray.count - 1;
@@ -68,6 +70,7 @@
     }
 }
 
+#pragma mark - 恢复上步撤销的d操作
 - (void)redoLastDraw {
     if (self.backPathsArray.count >0) {
         NSInteger index = self.backPathsArray.count - 1;
@@ -77,11 +80,14 @@
     }
 }
 
+#pragma mark - 清空所有操作
 - (void)clearSignature {
     [self.pathsArray removeAllObjects];
+    [self.backPathsArray removeAllObjects];
     [self setNeedsDisplay];
 }
 
+#pragma mark - 保存到相册
 - (void)saveSignature {
     UIImage *pngImage = [self signatureImage];
     UIImageWriteToSavedPhotosAlbum(pngImage, self, nil, NULL);

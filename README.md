@@ -45,6 +45,7 @@
  */
 - (void)clearSignature;
 
-
 ```
+#### 说明：
+ [视图封装](http://www.cnblogs.com/ZachRobin/p/7760317.html)
 
